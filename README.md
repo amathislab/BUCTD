@@ -1,6 +1,8 @@
 # Bottom-up conditioned top-down pose estimation (BUCTD) 
 This repository will contain the official code for our pre-print: [Rethinking pose estimation in crowds: overcoming the detection information-bottleneck and ambiguity](https://arxiv.org/abs/2306.07879).
 
+![BUCTD](.github/BUCTD_fig1.png)
+
 Code will be made available soon!
 
 
