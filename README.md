@@ -22,7 +22,7 @@ We are grateful to the authors of [HRNet](https://github.com/HRNet/deep-high-res
 
 ## Reference
 
-If you find this code or idead presented in our work useful, please cite:
+If you find this code or ideas presented in our work useful, please cite:
 
 [Rethinking pose estimation in crowds: overcoming the detection information-bottleneck and ambiguity](https://arxiv.org/abs/2306.07879) by Mu Zhou*, Lucas Stoffl*, Mackenzie W. Mathis and Alexander Mathis.
 
