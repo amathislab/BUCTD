@@ -1,14 +1,17 @@
-# Bottom-up conditioned top-down pose estimation (BUCTD) 
-This repository will contain the official code for our pre-print: [Rethinking pose estimation in crowds: overcoming the detection information-bottleneck and ambiguity](https://arxiv.org/abs/2306.07879). This work was also presented at the 2023 [CV4Animals workshop at CVPR](https://www.cv4animals.com)!
+# Bottom-up conditioned top-down pose estimation (BUCTD)
+
+This repository will contain the official code for our pre-print: [Rethinking pose estimation in crowds: overcoming the detection information-bottleneck and ambiguity](https://arxiv.org/abs/2306.07879). This work was accepted to ICCV 2023 and was also presented at the 2023 [CV4Animals workshop at CVPR](https://www.cv4animals.com).
+
+
 
 ![BUCTD](media/BUCTD_fig1.png)
 
-Code will be made available soon!
+Code will be made available before the end of August!
 
 This code will also be integrated in [DeepLabCut](https://github.com/DeepLabCut/DeepLabCut)!
 
 ### Code Acknowledgements
-We are grateful to the authors of [HRNet](https://github.com/HRNet/deep-high-resolution-net.pytorch) and [MIPNet](https://rawalkhirodkar.github.io/mipnet) as our code builds on their work! 
+We are grateful to the authors of [HRNet](https://github.com/HRNet/deep-high-resolution-net.pytorch) and [MIPNet](https://rawalkhirodkar.github.io/mipnet) as our code builds on their work!
 
 
 ## Reference
@@ -19,7 +22,7 @@ If you find this code useful, please cite:
 
 ```
 @misc{zhou2023rethinking,
-      title={Rethinking pose estimation in crowds: overcoming the detection information-bottleneck and ambiguity}, 
+      title={Rethinking pose estimation in crowds: overcoming the detection information-bottleneck and ambiguity},
       author={Mu Zhou and Lucas Stoffl and Mackenzie Mathis and Alexander Mathis},
       year={2023},
       eprint={2306.07879},
