@@ -15,7 +15,9 @@ This repository will contain the official code for our pre-print: [Rethinking po
 - This code will also be integrated in [DeepLabCut](https://github.com/DeepLabCut/DeepLabCut)!
 
 ### Code Acknowledgements
+
 We are grateful to the authors of [HRNet](https://github.com/HRNet/deep-high-resolution-net.pytorch) and [MIPNet](https://rawalkhirodkar.github.io/mipnet) as our code builds on their excellent work. 
+
 
 
 ## Reference
@@ -39,6 +41,7 @@ If you find this code or idead presented in our work useful, please cite:
 @misc{zhou2023rethinking,
       title={Rethinking pose estimation in crowds: overcoming the detection information-bottleneck and ambiguity}, 
       author={Mu Zhou and Lucas Stoffl and Mackenzie W. Mathis and Alexander Mathis},
+
       year={2023},
       eprint={2306.07879},
       archivePrefix={arXiv},
