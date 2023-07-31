@@ -1,6 +1,8 @@
 # Bottom-up conditioned top-down pose estimation (BUCTD) 
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/rethinking-pose-estimation-in-crowds/pose-estimation-on-crowdpose)](https://paperswithcode.com/sota/pose-estimation-on-crowdpose?p=rethinking-pose-estimation-in-crowds)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/rethinking-pose-estimation-in-crowds/animal-pose-estimation-on-marmoset-8k)](https://paperswithcode.com/sota/animal-pose-estimation-on-marmoset-8k?p=rethinking-pose-estimation-in-crowds)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/rethinking-pose-estimation-in-crowds/pose-estimation-on-coco)](https://paperswithcode.com/sota/pose-estimation-on-coco?p=rethinking-pose-estimation-in-crowds)
 
 This repository will contain the official code for our pre-print: [Rethinking pose estimation in crowds: overcoming the detection information-bottleneck and ambiguity](https://arxiv.org/abs/2306.07879).
 
