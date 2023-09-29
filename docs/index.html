@@ -23,16 +23,13 @@
     <style>
 
         :root {
-            --cebra-c: #1D29B8;
-            --cebra-e: #6235E0;
-            --cebra-b: #A045E8;
-            --cebra-r: #BF1BB9;
-            --cebra-a: #D4164F;
+            --purple: #CCAED4;
+            --pink: #D8737F;
         }
 
         .main {
             font-family: 'IBM Plex Sans Condensed', sans-serif;
-            color: gainsboro;
+            color: #b8a8ca;
         }
 
         .container-fluid .col {
@@ -46,20 +43,20 @@
         }
 
         h3 {
-            color: var(--cebra-r);
+            color: var(--pink);
         }
 
         a {
-            color: var(--cebra-r);
+            color: var(--pink);
             font-family: 'IBM Plex Sans Condensed', sans-serif;
         }
 
         a:hover {
-            color: var(--cebra-b);
+            color: var(--purple);
         }
 
         .muted-link {
-            color: #BF1BB9;
+            color: #AB6C82;
         }
 
         .paper-thumbnail {
@@ -71,7 +68,7 @@
     <title>BUCTD</title>
 </head>
 
-<body style="background-color: rgb(0, 0, 0);">
+<body style="background-color: #f2eff8;">
     <div class="container-fluid  d-flex flex-column main">
         <div class="row">
             <div class="col-md-2">
@@ -123,6 +120,14 @@
                         </a>
                         </h4>
                     </div>
+                </div>
+
+                <div class="row">
+                    <h3>
+                        <iframe width="420" height="315"
+                        src="https://www.youtube.com/watch?v=BHZnA-CZeZY">
+                        </iframe>
+                    </h3>
                 </div>
 
                 <div class="row pt-4">
@@ -199,20 +204,22 @@
                     <p>Please cite our paper as follows:</p>
                 </div>
                 <div class="row justify-content-md-center">
-                    <div class="col-sm-10 rounded p-3 m-2" style="background-color: rgb(20,20,20);">
+                    <div class="col-sm-13 rounded p-3 m-2" style="background-color: #efd8e0;">
                         <small class="code">
-                            @misc{zhou2023iccv,<br/>
-                                &nbsp;&nbsp;title={Rethinking pose estimation in crowds: overcoming the detection information-bottleneck and ambiguity},<br/>
-                                &nbsp;&nbsp;author={Mu Zhou and Lucas Stoffl and Mackenzie W. Mathis and Alexander Mathis},<br/>
-                                &nbsp;&nbsp;year={2023},<br/>
-                                &nbsp;&nbsp;journal={IEEE/CVF International Conference on Computer Vision}<br/>
+                            @InProceedings{Zhou_2023_ICCV,<br/>
+                                &nbsp;&nbsp;author    = {Zhou, Mu and Stoffl, Lucas and Mathis, Mackenzie Weygandt and Mathis, Alexander},<br/>
+                                &nbsp;&nbsp;title     = {Rethinking Pose Estimation in Crowds: Overcoming the Detection Information Bottleneck and Ambiguity},<br/>
+                                &nbsp;&nbsp;booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},<br/>
+                                &nbsp;&nbsp;month     = {October},<br/>
+                                &nbsp;&nbsp;year      = {2023},<br/>
+                                &nbsp;&nbsp;pages     = {14689-14699}<br/>
                             }
                         </small>
                     </div>
                 </div>
 
                 <div class="row">
-                    <small class="text-muted">Webpage designed using Bootstrap 5 and Fontawesome 5.</small>
+                    <small class="text-muted">We are grateful for Cebra.ai providing our website template. </small>
                     <a href="#" class="ml-auto"><i class="fas fa-sort-up"></i></a>
                 </div>
 
