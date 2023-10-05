@@ -37,7 +37,7 @@ We developed and tested our models with ```python=3.8.10, pytorch=1.8.0, cuda=11
    conda install pytorch==1.8.0 torchvision==0.9.0 cudatoolkit=11.1 -c pytorch -c conda-forge
    ```
 
-   3. Install other needed packages
+   3. Install additional dependencies
    
    ```sh
    pip install -r requirements.txt
