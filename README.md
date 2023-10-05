@@ -17,12 +17,12 @@ This repository contains the official code for our paper: [Rethinking pose estim
 
 ### Installation 
 
-We developed and tested our models under ```python=3.8.10, pytorch=1.8.0, cuda=11.1```. Other versions might be working as fine.
+We developed and tested our models under ```python=3.8.10, pytorch=1.8.0, cuda=11.1```. Other versions may work just as well.
 
 <details>
   <summary>Instructions</summary>
    
-   1. Clone this repo, and we'll call the directory that you cloned as ${BUCTD_ROOT}.
+   1. Clone this repo, and in the following we will call the directory that you cloned ${BUCTD_ROOT}.
 
    ```sh
    git clone https://github.com/amathislab/BUCTD.git
@@ -31,7 +31,7 @@ We developed and tested our models under ```python=3.8.10, pytorch=1.8.0, cuda=1
 
    2. Install Pytorch and torchvision
 
-   Follow the instruction on https://pytorch.org/get-started/locally/.
+   Follow the instructions on https://pytorch.org/get-started/locally/.
    ```sh
    # an example:
    conda install pytorch==1.8.0 torchvision==0.9.0 cudatoolkit=11.1 -c pytorch -c conda-forge
@@ -78,11 +78,11 @@ You can use the script: ```train_BUCTD_synthesis_noise.sh```.
 
 ***Empirical sampling***
 
-You can match your own BU models by updating the scripts in [./data_preprocessing/](./data_preprocessing/). 
+You can match your own bottom-up (BU) models by updating the scripts in [./data_preprocessing/](./data_preprocessing/). 
 
 If you don't want to match your own BU models for training, we provide the training annotations. You can download the annotations [here](https://drive.google.com/drive/folders/17UnDWUtvcXrmuH90_wYrDUxYDOBkQ0C1?usp=share_link).
 
-During inference, we use different BU/One-stage model's predictions (e.g. PETR, CID) as Conditions. The result files can be downloaded from the link above. 
+During inference, we use different BU/one-stage model's predictions (e.g. PETR, CID) as Conditions. The result files can be downloaded from the link above. 
 
 </details>
 
@@ -121,7 +121,7 @@ We are grateful to the authors of [HRNet](https://github.com/HRNet/deep-high-res
 
 If you find this code or ideas presented in our work useful, please cite:
 
-[Rethinking pose estimation in crowds: overcoming the detection information-bottleneck and ambiguity](https://arxiv.org/abs/2306.07879) by Mu Zhou*, Lucas Stoffl*, Mackenzie W. Mathis and Alexander Mathis.
+[Rethinking pose estimation in crowds: overcoming the detection information-bottleneck and ambiguity (ICCV)](https://openaccess.thecvf.com/content/ICCV2023/papers/Zhou_Rethinking_Pose_Estimation_in_Crowds_Overcoming_the_Detection_Information_Bottleneck_ICCV_2023_paper.pdf) by Mu Zhou*, Lucas Stoffl*, Mackenzie W. Mathis and Alexander Mathis ([arxiv](https://arxiv.org/abs/2306.07879))
 
 
 ```
