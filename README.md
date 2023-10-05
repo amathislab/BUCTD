@@ -17,7 +17,7 @@ This repository contains the official code for our paper: [Rethinking pose estim
 
 ### Installation 
 
-We developed and tested our models under ```python=3.8.10, pytorch=1.8.0, cuda=11.1```. Other versions may work just as well.
+We developed and tested our models with ```python=3.8.10, pytorch=1.8.0, cuda=11.1```. Other versions may also be suitable.
 
 <details>
   <summary>Instructions</summary>
