@@ -101,14 +101,14 @@ During inference, we use different BU/one-stage model's predictions (e.g. PETR, 
 
 | Model | Sampling strategy | Image Size | Condition | AP_val | AP_test | Weights | Script |
 |-------|---------------|------------|-----------|----|--------|----------|------|
-|  BUCTD-CoAM-W48     |        Generative sampling (3x iterative refinement)      |    384x288        |     CID-W32      |  49.0  |    48.5  |    [download](https://drive.google.com/drive/folders/1N-db7E2Ic57oFy_6C_Pt5ML_pUmVHFQt)     | [script](./scripts/test/test_BUCTD_COAM_gen_sample.sh) |
+|  BUCTD-CoAM-W48     |        Generative sampling (3x iterative refinement)      |    384x288        |     CID-W32      |  49.0  |    48.5  |    [download](https://drive.google.com/file/d/1O7SqZi4u-a1kBi46ya2HS-RgoyWHNfl_/view?usp=share_link)     | [script](./scripts/test/test_BUCTD_COAM_gen_sample.sh) |
 
 
 ### CrowdPose
 
 | Model | Sampling strategy | Image Size | Condition | AP | Weights | Script |
 |-------|---------------|------------|-----------|----|----------|------|
-|  BUCTD-CoAM-W48     |        Generative sampling       |    384x288        |      PETR      |  78.5  |      [download](https://drive.google.com/drive/folders/1fxsVMdXo1lagxr6mKOvDG-eH_2lYTFQh?usp=share_link)     | [script](./scripts/train/train_BUCTD_COAM_gen_sample.sh)
+|  BUCTD-CoAM-W48     |        Generative sampling       |    384x288        |      PETR      |  78.5  |      [TBD]()     | [script](./scripts/train/train_BUCTD_COAM_gen_sample.sh)
 
 </details>
 
