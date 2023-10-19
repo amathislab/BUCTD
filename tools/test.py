@@ -119,10 +119,10 @@ def main():
 
         if 'latest_state_dict' in model_object.keys():
             logger.info('=> loading from latest_state_dict at {}'.format(cfg.TEST.MODEL_FILE))
-            model.load_state_dict(model_object['latest_state_dict'], strict=False)
+            model.load_state_dict(model_object['latest_state_dict'], strict=True)
         else:
             logger.info('=> no latest_state_dict found')
-            model.load_state_dict(model_object, strict=False)
+            model.load_state_dict(model_object, strict=True)
     else:
         model_state_file = os.path.join(
             final_output_dir, 'final_state.pth'

@@ -518,12 +518,8 @@ class PoseHighResolutionNet(nn.Module):
                 x_list.append(x)
 
         # -------------------
-        if not self.cfg.MODEL.EXTRA.USE_ATTENTION:
-            if self.se_config[0]:
-                x_list = self.stage1_se(x_list, lambda_vec) ## 2, (32, 64), space_res = 64 x 48
-        else:
-            if self.att_config[0]:
-                x_list = self.stage1_att(x_list, cond_hm)
+        if self.cfg.MODEL.EXTRA.USE_ATTENTION and self.att_config[0]:
+            x_list = self.stage1_att(x_list, cond_hm)
         # -------------------
 
         y_list = self.stage2(x_list)
@@ -536,11 +532,7 @@ class PoseHighResolutionNet(nn.Module):
                 x_list.append(y_list[i])
     
         # -------------------
-        if not self.cfg.MODEL.EXTRA.USE_ATTENTION:
-            if self.se_config[1]:
-                x_list = self.stage2_se(x_list, lambda_vec) ## 3, (32, 64, 128) , space_res = 64 x 48
-        else:
-            if self.att_config[1]:
+        if self.cfg.MODEL.EXTRA.USE_ATTENTION and self.att_config[1]:
                 x_list = self.stage2_att(x_list, cond_hm)
         # -------------------
 
@@ -559,23 +551,15 @@ class PoseHighResolutionNet(nn.Module):
         # print("--- %s common seconds ---" % (mid_time))
 
         # -------------------
-        if not self.cfg.MODEL.EXTRA.USE_ATTENTION:
-            if self.se_config[2]:
-                x_list = self.stage3_se(x_list, lambda_vec)  ## 4, (32, 64, 128, 256) , space_res = 64 x 48
-        else:
-            if self.att_config[2]:
-                x_list = self.stage3_att(x_list, cond_hm)
+        if self.cfg.MODEL.EXTRA.USE_ATTENTION and self.att_config[2]:
+            x_list = self.stage3_att(x_list, cond_hm)
         # -------------------
 
         y_list = self.stage4(x_list)
 
         # -------------------
-        if not self.cfg.MODEL.EXTRA.USE_ATTENTION:
-            if self.se_config[3]:
-                y_list = self.stage4_se(y_list, lambda_vec)  ## 1, (32) , space_res = 64 x 48
-        else:
-            if self.att_config[3]:
-                y_list = self.stage4_att(y_list, cond_hm)
+        if self.cfg.MODEL.EXTRA.USE_ATTENTION and self.att_config[3]:
+            y_list = self.stage4_att(y_list, cond_hm)
         # -------------------
 
         x = self.final_layer(y_list[0])

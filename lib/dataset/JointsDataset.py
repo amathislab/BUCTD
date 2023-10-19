@@ -255,7 +255,7 @@ class JointsDataset(Dataset):
         x, y, w, h = np.array(bbox).astype(int)
         data_numpy_copy = copy.deepcopy(data_numpy)
 
-        if self.new_crop_aug:
+        if self.new_crop_aug and self.is_train:
             if self.bbox_aug:
                 x_delta = w * random.randint(0, 20) // 10
                 y_delta = h * random.randint(0, 20) // 10
