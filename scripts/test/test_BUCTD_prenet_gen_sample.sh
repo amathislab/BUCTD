@@ -12,20 +12,12 @@ cd ../..
      DATASET.TEST_ANNOTATION_FILE 'data/annotations/person_keypoints_val2017.json' \
      DATASET.COLORED 'True' \
      DATASET.BU_BBOX_MARGIN 0 \
-     TRAIN.LR 0.002 \
-     TRAIN.BEGIN_EPOCH 0 \
-     TRAIN.END_EPOCH 110 \
-     TRAIN.LR_STEP '(70, 100)' \
-     TRAIN.BATCH_SIZE_PER_GPU 12 \
-     TRAIN.USE_BU_BBOX True \
      TEST.BATCH_SIZE_PER_GPU 12 \
      TEST.USE_GT_BBOX False \
      TEST.USE_BU_BBOX True \
      TEST.FLIP_TEST True \
      TEST.MODEL_FILE 'models/COCO-BUCTD-preNet-W48.pth' \
      TEST.COCO_BBOX_FILE './PETR/results/keypoints_test_results.json' \
-     EPOCH_EVAL_FREQ 10 \
-     PRINT_FREQ 100 \
      MODEL.NAME 'pose_hrnet' \
      MODEL.EXTRA.USE_PRE_NET True \
      MODEL.CONDITIONAL_TOPDOWN True
