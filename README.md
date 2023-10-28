@@ -80,37 +80,35 @@ You can use the script: ```train_BUCTD_synthesis_noise.sh```.
 
 You can match your own bottom-up (BU) models by updating the scripts in [./data_preprocessing/](./data_preprocessing/). 
 
-If you don't want to match your own BU models for training, we provide the training annotations. You can download the annotations [here](https://drive.google.com/drive/folders/17UnDWUtvcXrmuH90_wYrDUxYDOBkQ0C1?usp=share_link).
+If you do not want to match your own BU models for training, we provide the training annotations. You can download the annotations [here](https://zenodo.org/records/10039883).
 
 During inference, we use different BU/one-stage model's predictions (e.g. PETR, CID) as Conditions. The result files can be downloaded from the link above. 
 
 </details>
 
 ### Testing
-<details>
-  <summary>We also provide the best model per human dataset along with the testing scripts.</summary>
+
+We also provide the best model per human dataset along with the testing scripts.</summary>
   
 ### COCO
 
 | Model | Sampling strategy | Image Size | Condition | AP | Weights | Script |
-|-------|---------------|------------|-----------|----|----------|------|
-|  BUCTD-preNet-W48     |        Generative sampling       |    384x288        |     PETR     |  77.8  |          [download](https://drive.google.com/drive/folders/10hxmkl_77SKwe13PTFP00YFL5Um66pDG?usp=share_link)     | [script](./scripts/test/test_BUCTD_prenet_gen_sample.sh)  |
+|-------|---------------|------------|-----------|----|----------|------
+|  BUCTD-preNet-W48     |        Generative sampling       |    384x288        |     PETR     |  77.8  |          [download](https://zenodo.org/records/10039883/files/COCO-BUCTD-preNet-W48.pth?download=1)     | [script](./scripts/test/test_BUCTD_prenet_gen_sample.sh)  |
 
 
 ### OCHuman
 
 | Model | Sampling strategy | Image Size | Condition | AP_val | AP_test | Weights | Script |
 |-------|---------------|------------|-----------|----|--------|----------|------|
-|  BUCTD-CoAM-W48     |        Generative sampling (3x iterative refinement)      |    384x288        |     CID-W32      |  49.0  |    48.5  |    [download](https://drive.google.com/drive/folders/1N-db7E2Ic57oFy_6C_Pt5ML_pUmVHFQt)     | [script](./scripts/test/test_BUCTD_COAM_gen_sample.sh) |
+|  BUCTD-CoAM-W48     |        Generative sampling (3x iterative refinement)      |    384x288        |     CID-W32      |  49.0  |    48.5  |    [download](https://zenodo.org/records/10039883/files/COCO-BUCTD-CoAM-W48.pth?download=1)     | [script](./scripts/test/test_BUCTD_COAM_gen_sample.sh) |
 
 
 ### CrowdPose
 
 | Model | Sampling strategy | Image Size | Condition | AP | Weights | Script |
 |-------|---------------|------------|-----------|----|----------|------|
-|  BUCTD-CoAM-W48     |        Generative sampling       |    384x288        |      PETR      |  78.5  |      [download](https://drive.google.com/drive/folders/1fxsVMdXo1lagxr6mKOvDG-eH_2lYTFQh?usp=share_link)     | [script](./scripts/train/train_BUCTD_COAM_gen_sample.sh)
-
-</details>
+|  BUCTD-CoAM-W48     |        Generative sampling       |    384x288        |      PETR      |  78.5  |      [download](https://zenodo.org/records/10039883/files/CrowdPose-BUCTD-CoAM-W48.pth?download=1)     | [script](./scripts/train/train_BUCTD_COAM_gen_sample.sh)
 
 
 ### Code Acknowledgements
