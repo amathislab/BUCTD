@@ -261,7 +261,7 @@ def _xywh2cs(cfg, x, y, w, h):
 
 if __name__ == '__main__':
 
-    image_file = '../media/000000.jpg'
+    image_file = '../media/000000.jpg'  ## image picked from PoseTrack21 - 024577_mpii_test
     image = cv2.imread(image_file)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     images = np.expand_dims(image, axis=0)
