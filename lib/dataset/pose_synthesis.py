@@ -806,6 +806,9 @@ def synthesize_pose(cfg, joints, estimated_joints, near_joints, area, num_overla
     }
 
     if cfg.DATASET.DATASET == 'coco':
+        CONFIG['ignore_kps'] = ()
+
+    if cfg.DATASET.DATASET == 'coco':
         synth_joints = synthesize_pose_coco(CONFIG, joints, estimated_joints, near_joints, area, num_overlap)
     elif cfg.DATASET.DATASET == 'crowdpose':
         synth_joints = synthesize_pose_crowdpose(CONFIG, joints, estimated_joints, near_joints, area, num_overlap)
