@@ -53,7 +53,7 @@ class DataLoader(JointsDataset):
         self.test_gt_file = cfg.DATASET.TEST_ANNOTATION_FILE
         self.img_dir = cfg.DATASET.TRAIN_IMAGE_DIR if self.is_train else cfg.DATASET.TEST_IMAGE_DIR
         self.condition_topdown = cfg.MODEL.CONDITIONAL_TOPDOWN
-        self.bbox_overlap_for_swapping_noise = False
+        self.bbox_overlap_thr_for_swapping_noise = False
 
         self.mode = 'train' if self.is_train else 'test'
         
@@ -214,10 +214,11 @@ class DataLoader(JointsDataset):
                 if type(obj['bbox_overlaps']) is dict:
                     max_iou = max(list(obj['bbox_overlaps'].values())) if len(obj['bbox_overlaps'])!=0 else 0
                     #near_ids = [int(k) for k, v in list(obj['bbox_overlaps'].items()) if v >= 0.1]
-                    if not self.bbox_overlap_for_swapping_noise:
+                    if not self.bbox_overlap_thr_for_swapping_noise:
                         near_joints = [np.array(ob['keypoints']).reshape((-1,3)) for ob in objs]
                     else:
-                        #near_ids = [int(k) for k, v in list(obj['bbox_overlaps'].items()) if v >= self.bbox_overlap_for_swapping_noise]
+                        #TODO: currently 'near joints' are all poses in the image
+                        #near_ids = [int(k) for k, v in list(obj['bbox_overlaps'].items()) if v >= self.bbox_overlap_thr_for_swapping_noise]
                         #near_joints = [np.array(ob['keypoints']).reshape((-1,3)) for ob in objs if ob['id'] in near_ids]
                         raise NotImplementedError('')
                     #if len(near_ids) == 0:
@@ -228,18 +229,17 @@ class DataLoader(JointsDataset):
                     near_joints = [np.zeros((self.num_joints, 3))]
             else:
                 max_iou = 0
-                if not self.bbox_overlap_for_swapping_noise:
-                    #near_joints = [np.array(ob['keypoints']).reshape((-1,3)) for ob in objs]                        
-                    bbox_overlaps = [self.calc_bbox_overlap(obj['clean_bbox'], ob['clean_bbox']) for ob in objs]
-                    # only keep 'near joints' that have overlap with current obj joints
-                    bbox_overlap_thr = 0.0
+                #TODO: set bbox_overlap_thr_for_swapping_noise when creating dataloader
+                self.bbox_overlap_thr_for_swapping_noise = 0.0
+                bbox_overlaps = np.array([self.calc_bbox_overlap(obj['clean_bbox'], ob['clean_bbox']) for ob in objs])
+                if not self.bbox_overlap_thr_for_swapping_noise:
+                    # HACK: add also the current obj to the list of near joints to avoid empty 'near joints'
                     near_joints = [np.array(ob['keypoints']).reshape((-1,3)) for ob_ix, ob in enumerate(objs) \
-                                        if bbox_overlaps[ob_ix] > bbox_overlap_thr and bbox_overlap_thr < 1]
-                    if len(bbox_overlaps) > 0:
-                        max_iou = max(bbox_overlaps)
+                                        if bbox_overlaps[ob_ix] > self.bbox_overlap_thr_for_swapping_noise]
+                    if len(bbox_overlaps) > 1:
+                        max_iou = max(bbox_overlaps[bbox_overlaps!=1])
                     obj['bbox_overlaps'] = bbox_overlaps
-                else:
-                    near_joints = [np.zeros((self.num_joints, 3))]
+                
 
 
 
