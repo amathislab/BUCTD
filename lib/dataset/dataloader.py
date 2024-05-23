@@ -53,7 +53,7 @@ class DataLoader(JointsDataset):
         self.test_gt_file = cfg.DATASET.TEST_ANNOTATION_FILE
         self.img_dir = cfg.DATASET.TRAIN_IMAGE_DIR if self.is_train else cfg.DATASET.TEST_IMAGE_DIR
         self.condition_topdown = cfg.MODEL.CONDITIONAL_TOPDOWN
-        self.bbox_overlap_for_swapping_noise = False
+        self.bbox_overlap_thr_for_swapping_noise = False
 
         self.mode = 'train' if self.is_train else 'test'
         
@@ -210,28 +210,36 @@ class DataLoader(JointsDataset):
                     cond_joints_3d_vis[k] = cond_joints_vis_
 
                 
-                if 'bbox_overlaps' in obj.keys():
-                    if type(obj['bbox_overlaps']) is dict:
-                        max_iou = max(list(obj['bbox_overlaps'].values())) if len(obj['bbox_overlaps'])!=0 else 0
-                        #near_ids = [int(k) for k, v in list(obj['bbox_overlaps'].items()) if v >= 0.1]
-                        if not self.bbox_overlap_for_swapping_noise:
-                            near_joints = [np.array(ob['keypoints']).reshape((-1,3)) for ob in objs]
-                        else:
-                            #near_ids = [int(k) for k, v in list(obj['bbox_overlaps'].items()) if v >= self.bbox_overlap_for_swapping_noise]
-                            #near_joints = [np.array(ob['keypoints']).reshape((-1,3)) for ob in objs if ob['id'] in near_ids]
-                            raise NotImplementedError('')
-                        #if len(near_ids) == 0:
-                        if len(near_joints) == 0:
-                            near_joints = [np.zeros([self.num_joints, 3])]
-                    else:
-                        max_iou = max(obj['bbox_overlaps'])
-                        near_joints = [np.zeros((self.num_joints, 3))]
-                else:
-                    max_iou = 0
-                    if not self.bbox_overlap_for_swapping_noise:
+            if 'bbox_overlaps' in obj.keys():
+                if type(obj['bbox_overlaps']) is dict:
+                    max_iou = max(list(obj['bbox_overlaps'].values())) if len(obj['bbox_overlaps'])!=0 else 0
+                    #near_ids = [int(k) for k, v in list(obj['bbox_overlaps'].items()) if v >= 0.1]
+                    if not self.bbox_overlap_thr_for_swapping_noise:
                         near_joints = [np.array(ob['keypoints']).reshape((-1,3)) for ob in objs]
                     else:
-                        near_joints = [np.zeros((self.num_joints, 3))]
+                        #TODO: currently 'near joints' are all poses in the image
+                        #near_ids = [int(k) for k, v in list(obj['bbox_overlaps'].items()) if v >= self.bbox_overlap_thr_for_swapping_noise]
+                        #near_joints = [np.array(ob['keypoints']).reshape((-1,3)) for ob in objs if ob['id'] in near_ids]
+                        raise NotImplementedError('')
+                    #if len(near_ids) == 0:
+                    if len(near_joints) == 0:
+                        near_joints = [np.zeros([self.num_joints, 3])]
+                else:
+                    max_iou = max(obj['bbox_overlaps'])
+                    near_joints = [np.zeros((self.num_joints, 3))]
+            else:
+                max_iou = 0
+                #TODO: set bbox_overlap_thr_for_swapping_noise when creating dataloader
+                self.bbox_overlap_thr_for_swapping_noise = 0.0
+                bbox_overlaps = np.array([self.calc_bbox_overlap(obj['clean_bbox'], ob['clean_bbox']) for ob in objs])
+                if not self.bbox_overlap_thr_for_swapping_noise:
+                    # HACK: add also the current obj to the list of near joints to avoid empty 'near joints'
+                    near_joints = [np.array(ob['keypoints']).reshape((-1,3)) for ob_ix, ob in enumerate(objs) \
+                                        if bbox_overlaps[ob_ix] > self.bbox_overlap_thr_for_swapping_noise]
+                    if len(bbox_overlaps) > 1:
+                        max_iou = max(bbox_overlaps[bbox_overlaps!=1])
+                    obj['bbox_overlaps'] = bbox_overlaps
+                
 
 
 
@@ -248,6 +256,23 @@ class DataLoader(JointsDataset):
                     'joints_3d_vis': joints_3d_vis,
                     'cond_joints': cond_joints_3d,
                     'cond_joints_vis' : cond_joints_3d_vis,
+                    'use_bu_bbox': bu_bbox,
+                    'filename': '',
+                    'imgnum': 0,
+                    'annotation_id': obj['id'],
+                    'cond_max_iou': max_iou,
+                    'near_joints': near_joints,
+                    'bbox': obj['clean_bbox'][:4],
+                    'best_model_key': best_model_key, 
+                    'image_id': obj['image_id'],
+                })
+            elif 'bbox_overlaps' in obj.keys():
+                rec.append({
+                    'image': image_path,
+                    'center': center,
+                    'scale': scale,
+                    'joints_3d': joints_3d,
+                    'joints_3d_vis': joints_3d_vis,
                     'use_bu_bbox': bu_bbox,
                     'filename': '',
                     'imgnum': 0,
@@ -481,6 +506,34 @@ class DataLoader(JointsDataset):
                 })
 
         return kpt_db
+    
+    
+    @staticmethod
+    def calc_bbox_overlap(bbox1, bbox2):
+        """
+        Calculate the overlap between two bounding boxes
+        Args:
+            bbox1: the first bounding box in the format (x, y, w, h)
+            bbox2: the second bounding box in the format (x, y, w, h)
+        Returns:
+            The overlap between
+        """
+        x1, y1, w1, h1 = bbox1
+        x2, y2, w2, h2 = bbox2
+
+        x1_max = x1 + w1
+        y1_max = y1 + h1
+        x2_max = x2 + w2
+        y2_max = y2 + h2
+
+        x_overlap = max(0, min(x1_max, x2_max) - max(x1, x2))
+        y_overlap = max(0, min(y1_max, y2_max) - max(y1, y2))
+
+        intersection = x_overlap * y_overlap
+        union = w1 * h1 + w2 * h2 - intersection
+
+        return intersection / union
+
 
     def evaluate(self, cfg, preds, output_dir, all_boxes, img_path, epoch=-1,
                  *args, **kwargs):

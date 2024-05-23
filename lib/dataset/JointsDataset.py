@@ -162,6 +162,12 @@ class JointsDataset(Dataset):
 
         use_bu_bbox = db_rec['use_bu_bbox'] if 'use_bu_bbox' in db_rec else False
 
+        if self.condition_topdown and self.is_train and 'cond_joints' not in db_rec.keys():
+            db_rec['cond_joints'] = joints.copy()
+            db_rec['cond_joints_vis'] = joints_vis.copy()
+            assert self.synthesis_pose, "Training with empirical sampling is not possible without providing 'cond_kpts'; \
+                            please train with generative sampling (DATASET.SYNTHESIS_POSE=True)"
+
         if 'cond_joints' in db_rec.keys():
             conditions = db_rec['cond_joints']
             conditions_vis = db_rec['cond_joints_vis']
@@ -169,13 +175,14 @@ class JointsDataset(Dataset):
             # choose randomly one condition (during testing, we take the best condition)
             # if no condition is provided, we set the cond. heatmap to zero
             # if only one condition is provided (e.g. crowdpose), we simply take that one
+
             if not type(conditions) is dict:
                 cond_joints = conditions
                 cond_joints_vis = conditions_vis
             elif len(list(conditions)) == 0:
                 cond_joints = np.zeros_like(joints)
                 cond_joints_vis = np.zeros_like(joints_vis)
-            else:
+            elif not self.synthesis_pose:
                 if not self.is_train:
                     best_model_key = self.best_bu_model_key if not db_rec['best_model_key'] else db_rec['best_model_key']
                     try:
@@ -191,23 +198,24 @@ class JointsDataset(Dataset):
                     cond_joints = conditions[random_key]
                     cond_joints_vis = conditions_vis[random_key]
 
-                ## if use synthesised pose -> replace the original cond_joints
-                if self.synthesis_pose and self.is_train:
+            ## if use synthesised pose -> replace the original cond_joints
+            if self.synthesis_pose and self.is_train:
 
-                    xmin = np.min(cond_joints[:,0][np.nonzero(cond_joints[:,0])]) 
-                    ymin = np.min(cond_joints[:,1][np.nonzero(cond_joints[:,1])])
-                    xmax = np.max(cond_joints[:,0][np.nonzero(cond_joints[:,0])])
-                    ymax = np.max(cond_joints[:,1][np.nonzero(cond_joints[:,1])])
-                    w = xmax - xmin
-                    h = ymax - ymin
-                    area = w * h
+                xmin = np.min(cond_joints[:,0][np.nonzero(cond_joints[:,0])]) 
+                ymin = np.min(cond_joints[:,1][np.nonzero(cond_joints[:,1])])
+                xmax = np.max(cond_joints[:,0][np.nonzero(cond_joints[:,0])])
+                ymax = np.max(cond_joints[:,1][np.nonzero(cond_joints[:,1])])
+                w = xmax - xmin
+                h = ymax - ymin
+                area = w * h
 
-                    near_joints = np.array(db_rec['near_joints']).reshape((-1, self.num_joints, 3))
-                    synthesized_pose = synthesize_pose(self.cfg, np.array(joints).reshape((-1,3)), np.array(cond_joints).reshape((-1,3)),
-                                                        near_joints=near_joints, area=area, num_overlap=0)
-                    cond_joints = synthesized_pose
+                near_joints = np.array(db_rec['near_joints']).reshape((-1, self.num_joints, 3))
+                synthesized_pose = synthesize_pose(self.cfg, np.array(joints).reshape((-1,3)), np.array(cond_joints).reshape((-1,3)),
+                                                    near_joints=near_joints, area=area, num_overlap=0)
+                cond_joints = synthesized_pose
 
-        if use_bu_bbox and cond_joints.sum()!=0 and 'cond_joints' in db_rec.keys():
+        #if use_bu_bbox and cond_joints.sum()!=0 and 'cond_joints' in db_rec.keys():
+        if use_bu_bbox and cond_joints[:,0].sum()!=0 and cond_joints[0,1].sum()!=0 and 'cond_joints' in db_rec.keys():
             xmin = np.min(cond_joints[:,0][np.nonzero(cond_joints[:,0])]) - self.bu_bbox_margin
             ymin = np.min(cond_joints[:,1][np.nonzero(cond_joints[:,1])]) - self.bu_bbox_margin
             xmax = np.max(cond_joints[:,0][np.nonzero(cond_joints[:,0])]) + self.bu_bbox_margin
